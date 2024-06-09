@@ -33,23 +33,37 @@ function fetchProductDetails(url, title, favicon) {
     main_images: images.main,
     thumbnail_images: images.thumbnails
   };
-  sendProductDetailsToBackground(details);
+  
+  return details
 }
 
 function sendProductDetailsToBackground(details) {
-  console.log("sendProductDetailsToBackground", details);
-  // send message to background.js where the server request is made
-  chrome.runtime.sendMessage({ message: "send_product_details", details }, response => {
-    // console.log("product_details_send from content to background", response);
-    console.log("response from background to content", response);
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage({ message: "update_product_details", details }, response => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(response);
+      }
+    });
   });
 }
 
 // listen for messages from the popup
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse) {
   if (request.message === 'fetch_product_details') {
-    console.log("fetch_product_details from popup to content", request);
     const details = request.details;
-    fetchProductDetails(details.url, details.title, details.favicon);
+    const productDetails = fetchProductDetails(details.url, details.title, details.favicon);
+    
+    if(productDetails) {
+      try {
+        const response = await sendProductDetailsToBackground(productDetails);
+        sendResponse({success: response || "Product details updated successfully"});
+      } catch (error) {
+        sendResponse({error: error.message || "Product details not found"});
+      }
+    } else {
+      sendResponse({error: "Product details not found"});
+    }
   }
 });

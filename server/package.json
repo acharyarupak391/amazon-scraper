@@ -1,4 +1,9 @@
 {
+  "name": "amazon-scraper-server",
+  "version": "1.0.0",
+  "description": "A server for chrome extension to scrape amazon.in product details from product page",
+  "main": "index.ts",
+
   "scripts": {
     "dev": "nodemon index.ts",
     "build": "tsc --outDir dist",

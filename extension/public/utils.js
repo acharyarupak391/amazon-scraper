@@ -89,8 +89,6 @@ function getProductImages(imageBlock) {
 
   try {
     const imageElements = imageBlock.querySelectorAll("ul.list > li.image.item div.imgTagWrapper img");
-    console.log('images main', imageElements)
-
     const imageUrls = [];
 
     imageElements.forEach((image) => {
@@ -105,8 +103,6 @@ function getProductImages(imageBlock) {
 
   try {
     const thumbnails = imageBlock.querySelectorAll("ul.a-button-list li.item.imageThumbnail img");
-    console.log('images thumbnails', thumbnails)
-
     const thumbnailUrls = [];
 
     thumbnails.forEach((thumbnail) => {

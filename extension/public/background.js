@@ -1,8 +1,7 @@
 const SERVER_URL = "http://localhost:8080";
 
-chrome.runtime.onMessage.addListener(async(request, sender, sendResponse) => {
-  if (request.message === "send_product_details") {
-    console.log("send_product_details from content to background", request)
+chrome.runtime.onMessage.addListener(async(request, _, sendResponse) => {
+  if (request.message === "update_product_details") {
 
     const details = request.details;
     
