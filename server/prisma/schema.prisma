@@ -1,0 +1,24 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                Int      @id @default(autoincrement())
+  url               String   @default("")
+  favicon           String   @default("")
+  page_title        String   @default("")
+  title             String   @default("")
+  price             Float    @default(0.0)
+  price_symbol      String   @default("")
+  overview          String[] @default([])
+  description       String[] @default([])
+  main_images       String[] @default([])
+  thumbnail_images  String[] @default([])
+}

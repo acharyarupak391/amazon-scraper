@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "build": "tsc --outDir dist",
+    "start": "yarn build && node dist/index.js",
+    "db-clean": "tsc db-delete.ts && node db-delete.js && rm db-delete.js",
+    "prisma-push": "prisma db push"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.14.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.1",
+    "prisma": "5.14.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/joi": "^17.2.3",
+    "@types/node": "^20.14.1",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
