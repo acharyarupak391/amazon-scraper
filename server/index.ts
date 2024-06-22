@@ -21,7 +21,8 @@ app.get('/products', async (_req: Request, res: Response) => {
     const products = await Product.findMany();
     res.json(products);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch products' });
+    console.error(error)
+    res.status(500).json({ error });
   }
 });
 

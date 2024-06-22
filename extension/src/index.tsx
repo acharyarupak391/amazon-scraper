@@ -8,6 +8,7 @@ const App = () => {
   const [tab, setTab] = React.useState<chrome.tabs.Tab | null>(null);
 
   const [saved, setSaved] = React.useState<boolean>(false);
+  const [saving, setSaving] = React.useState<boolean>(false);
 
   const isAmazonProductPage = React.useMemo(() => {
     if (!tab || !tab.url) return false;
@@ -38,6 +39,8 @@ const App = () => {
         const url = new URL(tab.url);
         if (url.hostname !== "www.amazon.in")
           return setError("Please open an amazon.in product page");
+
+        setSaving(true);
         chrome.tabs.sendMessage(
           tab.id,
           {
@@ -50,10 +53,12 @@ const App = () => {
           },
           () => {
             setSaved(true);
+            setSaving(false);
           }
         );
       } catch (error) {
         setError(error as string);
+        setSaving(false);
       }
     });
   };
